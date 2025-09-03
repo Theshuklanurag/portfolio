@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anurag Shukla - Certifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- Global Styles & Variables (Copied from your index.html) --- */
+        :root {
+            --primary-color: #00f5c4; /* Vibrant Cyan/Teal Accent */
+            --secondary-color: #ccd6f6; /* Light Slate for Text */
+            --background-color: #0a192f; /* Dark Navy Background */
+            --card-background: #112240; /* Lighter Navy for Cards */
+            --text-color: #8892b0; /* Slate Gray for paragraphs */
+            --white-color: #fff;
+            --font-family: 'Poppins', sans-serif;
+            --shadow-color: rgba(2, 12, 27, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Hide the default cursor for the custom one */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* --- Custom Cursor Styles --- */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background-color 0.3s, transform 0.1s;
+        }
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+        .cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 245, 196, 0.1);
+        }
+        a, button, .skill-card, .project-card, .contact-option-card, .hamburger, .certification-card, .modal-close {
+            cursor: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- Navigation Bar --- */
+        #header {
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #header.scrolled {
+            box-shadow: 0 10px 30px -10px var(--shadow-color);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5rem;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        nav .nav-links {
+            display: flex;
+        }
+
+        nav .nav-links li a {
+            color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links li a.active,
+        nav .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease-out;
+        }
+        nav .nav-links li a:hover::after,
+        nav .nav-links li a.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* --- General Section Styling --- */
+        .page-section {
+            padding: 8rem 0 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: -2rem auto 4rem auto;
+            color: var(--text-color);
+        }
+
+        /* --- Certifications Section --- */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .certification-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px -15px var(--shadow-color);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .certification-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 20px 30px -15px var(--shadow-color);
+        }
+        .certification-card:hover .cert-content h3 {
+            color: var(--primary-color);
+        }
+        .cert-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top center;
+            filter: grayscale(20%) contrast(110%) brightness(90%);
+            transition: filter 0.3s ease;
+        }
+        .certification-card:hover .cert-image {
+            filter: none;
+        }
+        .cert-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .cert-content h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
+            color: var(--secondary-color); /* Ensure consistent heading color */
+        }
+        .cert-issuer {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .cert-date {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        /* --- Modal for Viewing Certificates --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: var(--primary-color);
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* --- Footer --- */
+        footer {
+            background: transparent;
+            color: var(--text-color);
+            text-align: center;
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--card-background);
+            margin-top: 4rem;
+        }
+        .footer-socials {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+        .footer-socials a {
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .footer-socials a:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: var(--primary-color);
+        }
+
+        /* --- Animations --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media(max-width: 768px) {
+            * { cursor: auto; } /* Disable custom cursor on mobile */
+            .cursor, .cursor-dot { display: none; }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+
+            .nav-links {
+                position: fixed;
+                top: 5rem;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 5rem);
+                background: var(--background-color);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.3s ease-in-out;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { margin: 1.5rem 0; }
+
+            .hamburger { display: block; }
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <header id="header">
+        <nav>
+            <div class="container">
+                <a href="index.html" class="logo">Anurag Shukla</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="certifications.html" class="active">Certification</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="certifications" class="page-section fade-in-section">
+            <div class="container">
+                <h2 class="section-title">My Certifications & Achievements</h2>
+                <p class="section-subtitle">A collection of my professional certifications, showcasing my commitment to continuous learning and skill development in various domains of technology.</p>
+
+                <div class="certifications-grid">
+
+                    <div class="certification-card" data-img-src="21c62965e534fdcd5691f046fa1a11d5536645f5eb9b820b56e3ed5afe5dc0d4.png">
+                        <img src="21c62965e534fdcd5691f046fa1a11d5536645f5eb9b820b56e3ed5afe5dc0d4.png" alt="C++ Essentials Certificate from Scaler" class="cert-image">
+                        <div class="cert-content">
+                            <h3>C++ Course: Learn the Essentials</h3>
+                            <p class="cert-issuer">Issued by Scaler Topics</p>
+                            <p class="cert-date">Issued: September 1, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="WhatsApp Image 2025-09-03 at 19.33.23_efd3b2e4.jpg">
+                        <img src="WhatsApp Image 2025-09-03 at 19.33.23_efd3b2e4.jpg" alt="Getting Started with AWS Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Getting Started with AWS</h3>
+                            <p class="cert-issuer">Issued by Simplilearn SkillUp</p>
+                            <p class="cert-date">Issued: August 31, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="WhatsApp Image 2025-09-03 at 19.33.22_0b63677c.jpg">
+                        <img src="WhatsApp Image 2025-09-03 at 19.33.22_0b63677c.jpg" alt="Front End Development Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Introduction to Front End Development</h3>
+                            <p class="cert-issuer">Issued by Simplilearn SkillUp</p>
+                            <p class="cert-date">Issued: August 29, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="WhatsApp Image 2025-09-03 at 19.33.23_22ee3899.jpg">
+                        <img src="WhatsApp Image 2025-09-03 at 19.33.23_22ee3899.jpg" alt="Web Development for Beginners Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Web Development for Beginners</h3>
+                            <p class="cert-issuer">Issued by Simplilearn SkillUp</p>
+                            <p class="cert-date">Issued: August 28, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="1748674549464.jpeg">
+                        <img src="1748674549464.jpeg" alt="Python Programming Fundamentals Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Programming Fundamentals using Python</h3>
+                            <p class="cert-issuer">Issued by Infosys Springboard</p>
+                            <p class="cert-date">Issued: May 31, 2025</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certification-card" data-img-src="1747850940833.jpeg">
+                        <img src="1747850940833.jpeg" alt="Next Gen Technologies Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Next Gen Technologies</h3>
+                            <p class="cert-issuer">Issued by Infosys Springboard</p>
+                            <p class="cert-date">Issued: May 21, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="1747759646932.jpeg">
+                        <img src="1747759646932.jpeg" alt="Programming in C Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Programming in C</h3>
+                            <p class="cert-issuer">Issued by Infosys Springboard</p>
+                            <p class="cert-date">Issued: May 20, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="1748616021714.jpeg">
+                        <img src="1748616021714.jpeg" alt="C Programming from IIT Kanpur Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Student Development Program on C Programming</h3>
+                            <p class="cert-issuer">Issued by E & ICT Academy, IIT Kanpur</p>
+                            <p class="cert-date">Issued: May 14, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="certification-card" data-img-src="1745872932208.jpeg">
+                        <img src="1745872932208.jpeg" alt="Web Development Peer Training Certificate" class="cert-image">
+                        <div class="cert-content">
+                            <h3>Peer Training on Web Development</h3>
+                            <p class="cert-issuer">Issued by GNIOT CSE-Tech Club</p>
+                            <p class="cert-date">Issued: April 25, 2025</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="certModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-socials">
+                <a href="https://instagram.com/theshuklanurag" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/anurag-shukla-48a05832b" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Theshuklanurag" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Custom Cursor Logic ---
+            const cursor = document.querySelector('.cursor');
+            const cursorDot = document.querySelector('.cursor-dot');
+
+            // Check if it's a touch device
+            const isTouchDevice = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            if (isTouchDevice()) {
+                if(cursor) cursor.style.display = 'none';
+                if(cursorDot) cursorDot.style.display = 'none';
+            } else {
+                let mouseX = 0, mouseY = 0;
+                let cursorX = 0, cursorY = 0;
+                
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                function animateCursor() {
+                    cursorX += (mouseX - cursorX) * 0.1;
+                    cursorY += (mouseY - cursorY) * 0.1;
+                    if(cursor) {
+                       cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+                    }
+                    if(cursorDot) {
+                       cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+                    }
+                    requestAnimationFrame(animateCursor);
+                }
+                
+                animateCursor();
+
+                const interactiveElements = 'a, button, .skill-card, .project-card, .contact-option-card, .hamburger, .certification-card, .modal-close';
+                document.querySelectorAll(interactiveElements).forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hovered'));
+                });
+            }
+
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+
+            // --- Hamburger Menu for Mobile ---
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+                document.querySelectorAll('.nav-links li a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navLinks.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            // --- Intersection Observer for Fade-in Animations ---
+            const animatedElements = document.querySelectorAll('.fade-in-section');
+            if (animatedElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.15 // Trigger when 15% of the element is visible
+                });
+
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+            
+            // --- Modal logic for certifications page ---
+            const modal = document.getElementById("certModal");
+            if(modal) {
+                const modalImg = document.getElementById("modalImage");
+                const cards = document.querySelectorAll(".certification-card");
+                const span = document.getElementsByClassName("modal-close")[0];
+
+                cards.forEach(card => {
+                    card.onclick = function() {
+                        modal.style.display = "flex";
+                        modalImg.src = this.getAttribute('data-img-src');
+                    }
+                });
+
+                if(span) {
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+                }
+
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

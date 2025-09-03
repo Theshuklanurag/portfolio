@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anurag Shukla - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --primary-color: #00f5c4; /* Vibrant Cyan/Teal Accent */
+            --secondary-color: #ccd6f6; /* Light Slate for Text */
+            --background-color: #0a192f; /* Dark Navy Background */
+            --card-background: #112240; /* Lighter Navy for Cards */
+            --text-color: #8892b0; /* Slate Gray for paragraphs */
+            --white-color: #fff;
+            --font-family: 'Poppins', sans-serif;
+            --shadow-color: rgba(2, 12, 27, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Hide the default cursor for the custom one */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* --- Custom Cursor Styles --- */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background-color 0.3s, transform 0.1s;
+        }
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+        .cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 245, 196, 0.1);
+        }
+        a, button, .skill-card, .project-card, .contact-option-card, .hamburger, .certification-card {
+            cursor: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 2rem;
+            /* overflow: hidden; -- FIXED: Removed to prevent clipping animation */
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- Navigation Bar --- */
+        #header {
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #header.scrolled {
+            box-shadow: 0 10px 30px -10px var(--shadow-color);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5rem;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        nav .nav-links {
+            display: flex;
+        }
+
+        nav .nav-links li a {
+            color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links li a.active,
+        nav .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease-out;
+        }
+        nav .nav-links li a:hover::after,
+        nav .nav-links li a.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- Hero Section (Home Page) --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+            position: relative;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(10, 25, 47, 0.6) 0%, rgba(10, 25, 47, 1) 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-text h1 .highlight-gradient {
+            background: linear-gradient(90deg, #00f5c4, #00c7e4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #typing-text {
+            font-weight: 600;
+            color: var(--secondary-color);
+            min-height: 1.2em;
+        }
+
+        .hero-image {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 25px rgba(0, 245, 196, 0.3);
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+        }
+
+        /* --- General Section Styling --- */
+        .page-section, #about-summary {
+            padding: 8rem 0 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: -2rem auto 4rem auto;
+            color: var(--text-color);
+        }
+
+        /* About Summary */
+        #about-summary {
+            background-color: var(--card-background);
+            text-align: center;
+        }
+        .about-summary-content p {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+
+        /* --- About Section --- */
+        .about-flex {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        .about-image { flex: 1; }
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px -15px var(--shadow-color);
+        }
+        .about-text { flex: 1.5; }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #0a192f;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 245, 196, 0.2);
+        }
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: #0a192f;
+            transform: translateY(-3px);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: transparent;
+            color: var(--text-color);
+            text-align: center;
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--card-background);
+            margin-top: 4rem;
+        }
+        .footer-socials {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+        .footer-socials a {
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .footer-socials a:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: var(--primary-color);
+        }
+
+        /* --- Animations --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media(max-width: 768px) {
+            * { cursor: auto; } /* Disable custom cursor on mobile */
+            .cursor, .cursor-dot { display: none; }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+
+            .nav-links {
+                position: fixed;
+                top: 5rem;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 5rem);
+                background: var(--background-color);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.3s ease-in-out;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { margin: 1.5rem 0; }
+
+            .hamburger { display: block; }
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-image { grid-row: 1; margin: 0 auto 2rem auto; }
+            .hero-image img { width: 250px; height: 250px; }
+            .about-flex { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <header id="header">
+        <nav>
+            <div class="container">
+                <a href="index.html" class="logo">Anurag Shukla</a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="certifications.html">Certification</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-background"></div>
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>Hi, I'm <span class="highlight-gradient">Anurag Shukla</span></h1>
+                    <p>I'm a passionate <span id="typing-text"></span></p>
+                    <a href="contact.html" class="btn">Get In Touch</a>
+                </div>
+                <div class="hero-image">
+                    <img src="C:\Users\thesh\OneDrive\Desktop\Portfolio\WhatsApp Image 2025-04-24 at 13.25.06_45979be0.jpg" alt="Anurag Shukla">
+                </div>
+            </div>
+        </section>
+
+        <section id="about-summary" class="fade-in-section">
+            <div class="container">
+                 <h2 class="section-title">A Little About Me</h2>
+                 <div class="about-summary-content">
+                    <p>
+                        I am a dedicated and ambitious B.Tech student based in Greater Noida with a passion for web development and problem-solving. My journey in technology began in 2023, and since then, I've been cultivating my skills in modern web technologies. I am driven by the challenge of building beautiful, functional, and user-centric applications from the ground up.
+                    </p>
+                    <a href="about.html" class="btn">Learn More About Me</a>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-socials">
+                <a href="https://instagram.com/theshuklanurag" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/anurag-shukla-48a05832b" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Theshuklanurag" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Custom Cursor Logic ---
+            const cursor = document.querySelector('.cursor');
+            const cursorDot = document.querySelector('.cursor-dot');
+
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+            let dotX = 0, dotY = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+                if(cursor) {
+                   cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+                }
+                
+                dotX = mouseX;
+                dotY = mouseY;
+                 if(cursorDot) {
+                    cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+                 }
+                
+                requestAnimationFrame(animateCursor);
+            }
+            
+            animateCursor();
+
+            const interactiveElements = 'a, button, .skill-card, .project-card, .contact-option-card, .hamburger, .certification-card, .modal-close';
+            document.querySelectorAll(interactiveElements).forEach(el => {
+                el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hovered'));
+            });
+
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+
+            // --- Hamburger Menu for Mobile ---
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+                document.querySelectorAll('.nav-links li a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navLinks.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            // --- Typing Animation (only on the Home Page) ---
+            const typingTextElement = document.getElementById('typing-text');
+            if (typingTextElement) {
+                const roles = ["Developer", "Designer", "Problem Solver", "Innovator"];
+                let roleIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function type() {
+                    const currentRole = roles[roleIndex];
+                    let typeSpeed = isDeleting ? 100 : 150;
+
+                    if (isDeleting) {
+                        charIndex--;
+                    } else {
+                        charIndex++;
+                    }
+                    
+                    typingTextElement.textContent = currentRole.substring(0, charIndex);
+
+                    if (!isDeleting && charIndex === currentRole.length) {
+                        typeSpeed = 2000; // Pause at end of word
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        roleIndex = (roleIndex + 1) % roles.length;
+                        typeSpeed = 500; // Pause before typing new word
+                    }
+                    
+                    setTimeout(type, typeSpeed);
+                }
+                type();
+            }
+
+            // --- Intersection Observer for Fade-in Animations ---
+            const animatedElements = document.querySelectorAll('.fade-in-section, .timeline-item');
+            if (animatedElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.15 // Trigger when 15% of the element is visible
+                });
+
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
